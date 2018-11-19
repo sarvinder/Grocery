@@ -1,0 +1,30 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary_dark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionOverflowButtonStyle">@style/DotsDarkTheme</item>
+
+    </style>
+
+    <style name="Toolbar" parent="Widget.AppCompat.Light.ActionBar">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="actionOverflowButtonStyle">@style/DotsDarkTheme</item>
+
+    </style>
+
+    <style name="DotsDarkTheme" parent="@style/Widget.AppCompat.ActionButton.Overflow" >
+        <item name="android:tint">@color/ripple_light</item>
+    </style>
+    <style name="CustomTheme.Dialog" parent="Theme.AppCompat.Light.Dialog">
+    </style>
+    <style name="ListItemText">
+        <item name="android:textColor">@color/text_tertiary_dark</item>
+        <item name="android:textSize">@dimen/list_item_text_size</item>
+        <item name="android:layout_margin">2dp</item>
+    </style>
+</resources>
