@@ -13,12 +13,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.login.grocery.R;
+import com.example.login.grocery.model.ShoppingList;
 
 public class ActiveListAdapter extends RecyclerView.Adapter<ActiveListAdapter.MyViewHolder> {
     Context context;
+    ShoppingList shoppingList;
 
-    public ActiveListAdapter(Context context) {
+    public ActiveListAdapter(Context context,ShoppingList list) {
         this.context=context;
+        this.shoppingList = list;
     }
 
     @NonNull
@@ -73,8 +76,10 @@ public class ActiveListAdapter extends RecyclerView.Adapter<ActiveListAdapter.My
 
         //in this section we will bind the text view to the data
         //but this will be done by firebase
-        textViewListName.setText("Name");
-        textViewCreatedByUser.setText("Anonomus");
+        String listname = shoppingList.getListName();
+        String username = shoppingList.getOwner();
+        textViewListName.setText(listname);
+        textViewCreatedByUser.setText(username);
         textViewPeopleShoppingCount.setText("6");
 
     }

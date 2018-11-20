@@ -19,11 +19,18 @@ import com.example.login.grocery.ui.Fragments.MealsFragment;
 import com.example.login.grocery.ui.Fragments.ShoppingListsFragment;
 import com.example.login.grocery.ui.Widgets.AddListDialogFragment;
 import com.example.login.grocery.ui.Widgets.AddMealDialogFragment;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class HomeActivity extends AppCompatActivity {
 
     String mEncodedEmail = "s";
     private static final String LOG_TAG = HomeActivity.class.getSimpleName();
+
+    //Firebase setup
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference reference = database.getReference();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
