@@ -13,7 +13,7 @@
         android:id="@+id/edit_text_list_dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/positive_button_add_list_item"
+        android:hint="@string/hint_add_shopping_list"
         android:imeOptions="actionDone|flagNoExtractUi"
         android:inputType="text"
         android:textColor="@color/text_tertiary_dark"

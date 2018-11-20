@@ -16,7 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.login.grocery.R;
+import com.example.login.grocery.model.ShoppingList;
 import com.example.login.grocery.utils.Constants;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +29,9 @@ public class AddListDialogFragment extends DialogFragment {
 
     String mEncodedEmail;
     EditText mEditTextListName;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference reference = database.getReference();
 
     /**
      * Public static constructor that creates fragment and
@@ -87,47 +93,36 @@ public class AddListDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.positive_button_create, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                      //  addShoppingList();
+                        addShoppingList();
                     }
                 });
 
         return builder.create();
     }
 
-   /* *//**
+    /**
      * Add new active list
-     *//*
+     */
     public void addShoppingList() {
+
+        //Lets add the list to the firebase
+        String username = mEditTextListName.getText().toString();
+
+        ShoppingList list = new ShoppingList(username,"Anonomus owner");
+        reference.child("activeList").setValue(list);
+
+        /*
         String userEnteredName = mEditTextListName.getText().toString();
-
-        *//**
-         * If EditText input is not empty
-         *//*
         if (!userEnteredName.equals("")) {
-
-            *//**
-             * Create Firebase references
-             *//*
             Firebase userListsRef = new Firebase(Constants.FIREBASE_URL_USER_LISTS).
                     child(mEncodedEmail);
             final Firebase firebaseRef = new Firebase(Constants.FIREBASE_URL);
 
             Firebase newListRef = userListsRef.push();
-
-            *//* Save listsRef.push() to maintain same random Id *//*
-            final String listId = newListRef.getKey();
-
-            *//* HashMap for data to update *//*
+           final String listId = newListRef.getKey();
             HashMap<String, Object> updateShoppingListData = new HashMap<>();
-
-            *//**
-             * Set raw version of date to the ServerValue.TIMESTAMP value and save into
-             * timestampCreatedMap
-             *//*
             HashMap<String, Object> timestampCreated = new HashMap<>();
             timestampCreated.put(SyncStateContract.Constants.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
-
-            *//* Build the shopping list *//*
             ShoppingList newShoppingList = new ShoppingList(userEnteredName, mEncodedEmail,
                     timestampCreated);
 
@@ -139,19 +134,20 @@ public class AddListDialogFragment extends DialogFragment {
 
             updateShoppingListData.put("/" + SyncStateContract.Constants.FIREBASE_LOCATION_OWNER_MAPPINGS + "/" + listId,
                     mEncodedEmail);
-
-            *//* Do the update *//*
             firebaseRef.updateChildren(updateShoppingListData, new Firebase.CompletionListener() {
                 @Override
                 public void onComplete(FirebaseError firebaseError, Firebase firebase) {
-                    *//* Now that we have the timestamp, update the reversed timestamp *//*
                     Utils.updateTimestampReversed(firebaseError, "AddList", listId,
                             null, mEncodedEmail);
                 }
             });
-
-            *//* Close the dialog fragment *//*
             AddListDialogFragment.this.getDialog().cancel();
+            */
+
+
+
+
+
         }
-    }*/
 }
+

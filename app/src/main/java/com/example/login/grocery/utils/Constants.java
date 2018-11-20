@@ -1,5 +1,8 @@
 package com.example.login.grocery.utils;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public final class Constants {
 
     /**
@@ -41,6 +44,17 @@ public final class Constants {
     public static final String FIREBASE_URL_USER_FRIENDS = FIREBASE_URL + "/" + FIREBASE_LOCATION_USER_FRIENDS;
     public static final String FIREBASE_URL_LISTS_SHARED_WITH = FIREBASE_URL + "/" + FIREBASE_LOCATION_LISTS_SHARED_WITH;
 */
+    /**
+     * Constants for Firebase
+     */
+    //Firebase
+    public static final FirebaseDatabase DATABASE = FirebaseDatabase.getInstance();
+    public static final DatabaseReference REFERENCE = DATABASE.getReference();
+
+
+
+
+
     /**
      * Constants for bundles, extras and shared preferences keys
      */
