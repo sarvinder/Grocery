@@ -3,15 +3,24 @@ package com.example.login.grocery.ui.Fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.login.grocery.R;
+import com.example.login.grocery.model.ShoppingList;
 import com.example.login.grocery.ui.Adapters.ActiveListAdapter;
+import com.example.login.grocery.utils.Constants;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,12 +40,16 @@ public class ShoppingListsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private final String LOG = "ShoppingListFragment";
+    View view;
 
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private ActiveListAdapter mAdapter;
 
-   // private OnFragmentInteractionListener mListener;
+
+
+    // private OnFragmentInteractionListener mListener;
 
     public ShoppingListsFragment() {
         // Required empty public constructor
@@ -73,22 +86,22 @@ public class ShoppingListsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-         View view = inflater.inflate(R.layout.fragment_shopping_lists, container, false);
+        view = inflater.inflate(R.layout.fragment_shopping_lists, container, false);
 
-         //lets attach the recycler view here
-        mRecyclerView = view.findViewById(R.id.shopping_list_view);
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
+        DatabaseReference reference = Constants.REFERENCE.child("activeList");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ShoppingList list = dataSnapshot.getValue(ShoppingList.class);
+                setUpList(list);
+            }
 
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        mAdapter=new ActiveListAdapter( getContext());
-        mRecyclerView.setAdapter(mAdapter);
-
+            }
+        });
 
 
         return view;
@@ -100,6 +113,22 @@ public class ShoppingListsFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }*/
+
+   public void setUpList(ShoppingList list){
+       //lets attach the recycler view here
+       mRecyclerView = view.findViewById(R.id.shopping_list_view);
+
+       // use this setting to improve performance if you know that changes
+       // in content do not change the layout size of the RecyclerView
+       mRecyclerView.setHasFixedSize(true);
+
+       // use a linear layout manager
+       mLayoutManager = new LinearLayoutManager(getContext());
+       mRecyclerView.setLayoutManager(mLayoutManager);
+       mAdapter = new ActiveListAdapter(getContext(),list);
+       mRecyclerView.setAdapter(mAdapter);
+
+   }
 
     @Override
     public void onAttach(Context context) {

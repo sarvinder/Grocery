@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.login.grocery.R;
+import com.example.login.grocery.model.ShoppingList;
 import com.example.login.grocery.utils.Constants;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -106,7 +107,9 @@ public class AddListDialogFragment extends DialogFragment {
 
         //Lets add the list to the firebase
         String username = mEditTextListName.getText().toString();
-        reference.child("listItem").setValue(username);
+
+        ShoppingList list = new ShoppingList(username,"Anonomus owner");
+        reference.child("activeList").setValue(list);
 
         /*
         String userEnteredName = mEditTextListName.getText().toString();
