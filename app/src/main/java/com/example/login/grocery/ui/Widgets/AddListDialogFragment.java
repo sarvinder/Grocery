@@ -20,6 +20,7 @@ import com.example.login.grocery.model.ShoppingList;
 import com.example.login.grocery.utils.Constants;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -108,8 +109,13 @@ public class AddListDialogFragment extends DialogFragment {
         //Lets add the list to the firebase
         String username = mEditTextListName.getText().toString();
 
+       /* //lets add the timestamp
+        HashMap<String,Object> timestampCreated = new HashMap<>();
+        timestampCreated.put("TimeStamp",ServerValue.TIMESTAMP);
+        */
         ShoppingList list = new ShoppingList(username,"Anonomus owner");
         reference.child("activeList").setValue(list);
+
 
         /*
         String userEnteredName = mEditTextListName.getText().toString();

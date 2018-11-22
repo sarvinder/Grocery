@@ -17,6 +17,7 @@ import android.view.View;
 import com.example.login.grocery.R;
 import com.example.login.grocery.ui.Fragments.MealsFragment;
 import com.example.login.grocery.ui.Fragments.ShoppingListsFragment;
+import com.example.login.grocery.ui.Screens.ActiveListDetailsActivity;
 import com.example.login.grocery.ui.Widgets.AddListDialogFragment;
 import com.example.login.grocery.ui.Widgets.AddMealDialogFragment;
 import com.google.firebase.database.DatabaseReference;
@@ -62,7 +63,7 @@ public class HomeActivity extends AppCompatActivity {
          * Open SettingsActivity with sort options when Sort icon was clicked
          */
         if (id == R.id.action_sort) {
-           // startActivity(new Intent(this, SettingsActivity.class));
+            startActivity(new Intent(this, ActiveListDetailsActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

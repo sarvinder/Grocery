@@ -1,6 +1,7 @@
 package com.example.login.grocery.ui.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,11 +11,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.login.grocery.R;
 import com.example.login.grocery.model.ShoppingList;
 import com.example.login.grocery.ui.Adapters.ActiveListAdapter;
+import com.example.login.grocery.ui.Screens.ActiveListDetailsActivity;
 import com.example.login.grocery.utils.Constants;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,7 +33,7 @@ import com.google.firebase.database.ValueEventListener;
  * Use the {@link ShoppingListsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ShoppingListsFragment extends Fragment {
+public class ShoppingListsFragment extends Fragment implements ActiveListAdapter.ListItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -125,7 +128,7 @@ public class ShoppingListsFragment extends Fragment {
        // use a linear layout manager
        mLayoutManager = new LinearLayoutManager(getContext());
        mRecyclerView.setLayoutManager(mLayoutManager);
-       mAdapter = new ActiveListAdapter(getContext(),list);
+       mAdapter = new ActiveListAdapter(getContext(),list,this);
        mRecyclerView.setAdapter(mAdapter);
 
    }
@@ -147,7 +150,18 @@ public class ShoppingListsFragment extends Fragment {
       //  mListener = null;
     }
 
-/*    *//**
+    @Override
+    public void onListNameClickListener(int clickedItemIndex, TextView textView) {
+
+        //Toast.makeText(getContext(), textView.getText(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), ActiveListDetailsActivity.class);
+        String data = textView.getText().toString();
+        intent.putExtra(Constants.KEY_LIST_ITEM_ID,data);
+        startActivity(intent);
+
+    }
+
+    /*    *//**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
