@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.provider.SyncStateContract;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 import com.example.login.grocery.R;
 import com.example.login.grocery.model.ShoppingList;
 import com.example.login.grocery.utils.Constants;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
@@ -103,6 +106,9 @@ public class AddListDialogFragment extends DialogFragment {
 
     /**
      * Add new active list
+     * This uses the push method
+     * This example uses push() to create a shopinglist in the node containing shoping lists for all users at /listID
+     * and simultaneously retrieve the key with getKey()
      */
     public void addShoppingList() {
 
@@ -113,9 +119,25 @@ public class AddListDialogFragment extends DialogFragment {
         HashMap<String,Object> timestampCreated = new HashMap<>();
         timestampCreated.put("TimeStamp",ServerValue.TIMESTAMP);
         */
-        ShoppingList list = new ShoppingList(username,"Anonomus owner");
-        reference.child("activeList").setValue(list);
+        if (!username.equals("")) {
+            ShoppingList list = new ShoppingList(username, "Anonomus owner");
+            //reference.child("activeList").setValue(list);
 
+            DatabaseReference newReference = reference.push();
+            final String listID = newReference.getKey();
+
+            HashMap<String, Object> updateShoppingListData = new HashMap<>();
+            HashMap<String, Object> shoppingListMap = list.toMap();
+            updateShoppingListData.put("/"+ listID + "/",shoppingListMap);
+
+            reference.updateChildren(updateShoppingListData, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                    Toast.makeText(getContext(), "saved the list in database", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
 
         /*
         String userEnteredName = mEditTextListName.getText().toString();
@@ -125,7 +147,7 @@ public class AddListDialogFragment extends DialogFragment {
             final Firebase firebaseRef = new Firebase(Constants.FIREBASE_URL);
 
             Firebase newListRef = userListsRef.push();
-           final String listId = newListRef.getKey();
+            final String listId = newListRef.getKey();
             HashMap<String, Object> updateShoppingListData = new HashMap<>();
             HashMap<String, Object> timestampCreated = new HashMap<>();
             timestampCreated.put(SyncStateContract.Constants.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);

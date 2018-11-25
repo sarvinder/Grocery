@@ -17,12 +17,16 @@ import android.widget.Toast;
 import com.example.login.grocery.R;
 import com.example.login.grocery.model.ShoppingList;
 import com.example.login.grocery.ui.Adapters.ActiveListAdapter;
+import com.example.login.grocery.ui.Adapters.FirebaseUIViewHolder;
 import com.example.login.grocery.ui.Screens.ActiveListDetailsActivity;
 import com.example.login.grocery.utils.Constants;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 /**
@@ -49,9 +53,8 @@ public class ShoppingListsFragment extends Fragment implements ActiveListAdapter
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private ActiveListAdapter mAdapter;
-
-
-
+    private DatabaseReference reference;
+    private FirebaseUIViewHolder mViewHolder;
     // private OnFragmentInteractionListener mListener;
 
     public ShoppingListsFragment() {
@@ -92,7 +95,7 @@ public class ShoppingListsFragment extends Fragment implements ActiveListAdapter
         view = inflater.inflate(R.layout.fragment_shopping_lists, container, false);
 
 
-        DatabaseReference reference = Constants.REFERENCE.child("activeList");
+        reference = Constants.REFERENCE.child("activeList");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -105,7 +108,6 @@ public class ShoppingListsFragment extends Fragment implements ActiveListAdapter
 
             }
         });
-
 
         return view;
     }
@@ -129,7 +131,37 @@ public class ShoppingListsFragment extends Fragment implements ActiveListAdapter
        mLayoutManager = new LinearLayoutManager(getContext());
        mRecyclerView.setLayoutManager(mLayoutManager);
        mAdapter = new ActiveListAdapter(getContext(),list,this);
+
+    /*   Query query = reference
+               .limitToLast(10);
+       FirebaseRecyclerOptions<ShoppingList> options = new FirebaseRecyclerOptions.Builder<ShoppingList>().setQuery(query,ShoppingList.class).build();
+       FirebaseRecyclerAdapter<ShoppingList,FirebaseUIViewHolder> adapter = new FirebaseRecyclerAdapter<ShoppingList, FirebaseUIViewHolder>(options) {
+           @Override
+           protected void onBindViewHolder(@NonNull FirebaseUIViewHolder holder, int position, @NonNull ShoppingList model) {
+               holder.textViewListName(model.getListName());
+               holder.textViewCreatedByUser(model.getOwner());
+           }
+
+           @NonNull
+           @Override
+           public FirebaseUIViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+               int layoutIdForListItem = R.layout.single_active_list;
+               LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+               boolean shouldAttachToParentImmediately = false;
+
+               View view = inflater.inflate(layoutIdForListItem, viewGroup, shouldAttachToParentImmediately);
+               FirebaseUIViewHolder holder = new FirebaseUIViewHolder(view);
+
+
+               return holder;
+
+           }
+       };*/
+
        mRecyclerView.setAdapter(mAdapter);
+
+       //lets use the firebaseui to populate the list
+
 
    }
 
@@ -161,18 +193,5 @@ public class ShoppingListsFragment extends Fragment implements ActiveListAdapter
 
     }
 
-    /*    *//**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     *//*
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }*/
+
 }

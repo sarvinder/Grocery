@@ -1,6 +1,8 @@
 package com.example.login.grocery.ui.Screens;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -9,7 +11,16 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.login.grocery.R;
+import com.example.login.grocery.model.ShoppingList;
+import com.example.login.grocery.model.User;
+import com.example.login.grocery.ui.Widgets.EditListNameDialogFragment;
 import com.example.login.grocery.utils.Constants;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
 
 public class ActiveListDetailsActivity extends AppCompatActivity {
 
@@ -17,6 +28,11 @@ public class ActiveListDetailsActivity extends AppCompatActivity {
     /* Stores whether the current user is the owner */
     private boolean mCurrentUserIsOwner = true;
     private String mListId;
+    private ShoppingList mShoppingList;
+    private String mEncodedEmail = "";
+    private HashMap<String, User> mSharedWithUsers =new HashMap<>();
+    private DatabaseReference reference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +62,38 @@ public class ActiveListDetailsActivity extends AppCompatActivity {
             setTitle(mListId);
         }
 
+        reference = Constants.REFERENCE.child("activeList");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ShoppingList list = dataSnapshot.getValue(ShoppingList.class);
+                if (list == null) {
+                    finish();
+                    /**
+                     * Make sure to call return, otherwise the rest of the method will execute,
+                     * even after calling finish.
+                     */
+                    return;
+                }
+                mShoppingList = list;
+                String listname = mShoppingList.getListName();
+                setTitle(listname);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        this.finish();
+        finish();
+        return;
     }
 
     @Override
@@ -79,8 +120,28 @@ public class ActiveListDetailsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        int id = item.getItemId();
+
+        /**
+         * Show edit list dialog when the edit action is selected
+         */
+        if (id == R.id.action_edit_list_name) {
+            showEditListNameDialog();
+            return true;
+        }
 
 
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * Show edit list name dialog when user selects "Edit list name" menu item
+     */
+    public void showEditListNameDialog() {
+        /* Create an instance of the dialog fragment and show it */
+        DialogFragment dialog = EditListNameDialogFragment.newInstance(mShoppingList, mListId,
+                mEncodedEmail, mSharedWithUsers);
+        dialog.show(this.getSupportFragmentManager(), "EditListNameDialogFragment");
+    }
+
 }
