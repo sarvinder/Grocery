@@ -8,15 +8,14 @@
     android:paddingLeft="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_vertical_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
->
+    >
+
     <EditText
         android:id="@+id/edit_text_list_dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_add_shopping_list"
         android:imeOptions="actionDone|flagNoExtractUi"
-        android:inputType="text"
-        android:textColor="@color/text_tertiary_dark"
-        android:textColorHint="@color/text_tertiary_dark" />
-
+        android:inputType="textCapWords"
+        android:textColor="@color/background_dark"
+        android:textColorHint="@color/mid_grey" />
 </RelativeLayout>

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "702539568355",
+    "firebase_url": "https://sentiment-tweet-2be6f.firebaseio.com",
+    "project_id": "sentiment-tweet-2be6f",
+    "storage_bucket": "sentiment-tweet-2be6f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:702539568355:android:2f4a18acb6389d81",
+        "android_client_info": {
+          "package_name": "com.example.login.grocery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "702539568355-4dcm0449d06ah850e2ovsicd77ntm5fb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.login.grocery",
+            "certificate_hash": "3d9ab76c75bae3d5fb772c651db7a04d2a15d2bd"
+          }
+        },
+        {
+          "client_id": "702539568355-buj8d9tvjfrtqlhlraacmotrq2q88fc2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuMGapKDcdIyZCfec9Y4Hxv4NrNdxEIGo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "702539568355-buj8d9tvjfrtqlhlraacmotrq2q88fc2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

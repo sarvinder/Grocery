@@ -13,13 +13,25 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.login.grocery.R;
+import com.example.login.grocery.model.ShoppingList;
+
+import java.util.List;
 
 public class ActiveListAdapter extends RecyclerView.Adapter<ActiveListAdapter.MyViewHolder> {
     Context context;
+    ShoppingList shoppingList;
+    ListItemClickListener listItemClickListener;
 
-    public ActiveListAdapter(Context context) {
+    public ActiveListAdapter(Context context,ShoppingList list,ListItemClickListener listItemClickListener) {
         this.context=context;
+        this.shoppingList = list;
+        this.listItemClickListener = listItemClickListener;
     }
+
+    public interface ListItemClickListener{
+        void onListNameClickListener(int clickedItemIndex ,TextView textView);
+    }
+
 
     @NonNull
     @Override
@@ -48,7 +60,7 @@ public class ActiveListAdapter extends RecyclerView.Adapter<ActiveListAdapter.My
         return 1;
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
     TextView textViewListName;
     TextView createdBy;
@@ -73,12 +85,20 @@ public class ActiveListAdapter extends RecyclerView.Adapter<ActiveListAdapter.My
 
         //in this section we will bind the text view to the data
         //but this will be done by firebase
-        textViewListName.setText("Name");
-        textViewCreatedByUser.setText("Anonomus");
+        String listname = shoppingList.getListName();
+        String username = shoppingList.getOwner();
+        textViewListName.setText(listname);
+        textViewCreatedByUser.setText(username);
         textViewPeopleShoppingCount.setText("6");
+        textViewListName.setOnClickListener(this);
 
     }
 
 
-}
+        @Override
+        public void onClick(View v) {
+            int clickedPosition = getAdapterPosition();
+            listItemClickListener.onListNameClickListener(clickedPosition,textViewListName);
+        }
+    }
 }
