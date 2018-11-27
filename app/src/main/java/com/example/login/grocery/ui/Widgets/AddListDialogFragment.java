@@ -35,7 +35,7 @@ public class AddListDialogFragment extends DialogFragment {
     EditText mEditTextListName;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference reference = database.getReference();
+    DatabaseReference reference = database.getReference().child("activeList");
 
     /**
      * Public static constructor that creates fragment and
@@ -133,49 +133,15 @@ public class AddListDialogFragment extends DialogFragment {
             reference.updateChildren(updateShoppingListData, new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-                    Toast.makeText(getContext(), "saved the list in database", Toast.LENGTH_SHORT).show();
+                    //toast("saved to the database");
                 }
             });
 
         }
-
-        /*
-        String userEnteredName = mEditTextListName.getText().toString();
-        if (!userEnteredName.equals("")) {
-            Firebase userListsRef = new Firebase(Constants.FIREBASE_URL_USER_LISTS).
-                    child(mEncodedEmail);
-            final Firebase firebaseRef = new Firebase(Constants.FIREBASE_URL);
-
-            Firebase newListRef = userListsRef.push();
-            final String listId = newListRef.getKey();
-            HashMap<String, Object> updateShoppingListData = new HashMap<>();
-            HashMap<String, Object> timestampCreated = new HashMap<>();
-            timestampCreated.put(SyncStateContract.Constants.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
-            ShoppingList newShoppingList = new ShoppingList(userEnteredName, mEncodedEmail,
-                    timestampCreated);
-
-            HashMap<String, Object> shoppingListMap = (HashMap<String, Object>)
-                    new ObjectMapper().convertValue(newShoppingList, Map.class);
-
-            Utils.updateMapForAllWithValue(null, listId, mEncodedEmail,
-                    updateShoppingListData, "", shoppingListMap);
-
-            updateShoppingListData.put("/" + SyncStateContract.Constants.FIREBASE_LOCATION_OWNER_MAPPINGS + "/" + listId,
-                    mEncodedEmail);
-            firebaseRef.updateChildren(updateShoppingListData, new Firebase.CompletionListener() {
-                @Override
-                public void onComplete(FirebaseError firebaseError, Firebase firebase) {
-                    Utils.updateTimestampReversed(firebaseError, "AddList", listId,
-                            null, mEncodedEmail);
-                }
-            });
             AddListDialogFragment.this.getDialog().cancel();
-            */
-
-
-
-
 
         }
+
+
 }
 

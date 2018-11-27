@@ -1,13 +1,16 @@
 package com.example.login.grocery.ui.Fragments;
 
+import android.animation.StateListAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +31,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,6 +62,7 @@ public class ShoppingListsFragment extends Fragment implements ActiveListAdapter
     private DatabaseReference reference;
     private FirebaseUIViewHolder mViewHolder;
     // private OnFragmentInteractionListener mListener;
+    private ArrayList<ShoppingList> listHashMap = new ArrayList<>();
 
     public ShoppingListsFragment() {
         // Required empty public constructor
@@ -95,12 +102,24 @@ public class ShoppingListsFragment extends Fragment implements ActiveListAdapter
         view = inflater.inflate(R.layout.fragment_shopping_lists, container, false);
 
 
+        //**********************retriving data from the firebase*********************************
         reference = Constants.REFERENCE.child("activeList");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ShoppingList list = dataSnapshot.getValue(ShoppingList.class);
-                setUpList(list);
+                listHashMap.clear();
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+
+                    ShoppingList list = ds.getValue(ShoppingList.class);
+                    Log.e(LOG,"the length of the list is :  "+list.getListName());
+                    Log.e(LOG,"the length of the list is :  "+list.getOwner());
+
+                    listHashMap.add(list);
+
+
+                }
+                setUpList(listHashMap);
+
             }
 
             @Override
@@ -108,55 +127,24 @@ public class ShoppingListsFragment extends Fragment implements ActiveListAdapter
 
             }
         });
+        //***************************************************************************************
 
         return view;
     }
 
-   /* // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }*/
 
-   public void setUpList(ShoppingList list){
+   public void setUpList(ArrayList<ShoppingList> list){
        //lets attach the recycler view here
        mRecyclerView = view.findViewById(R.id.shopping_list_view);
 
        // use this setting to improve performance if you know that changes
        // in content do not change the layout size of the RecyclerView
        mRecyclerView.setHasFixedSize(true);
-
+       mRecyclerView.setStateListAnimator(new StateListAnimator());
        // use a linear layout manager
        mLayoutManager = new LinearLayoutManager(getContext());
        mRecyclerView.setLayoutManager(mLayoutManager);
        mAdapter = new ActiveListAdapter(getContext(),list,this);
-
-    /*   Query query = reference
-               .limitToLast(10);
-       FirebaseRecyclerOptions<ShoppingList> options = new FirebaseRecyclerOptions.Builder<ShoppingList>().setQuery(query,ShoppingList.class).build();
-       FirebaseRecyclerAdapter<ShoppingList,FirebaseUIViewHolder> adapter = new FirebaseRecyclerAdapter<ShoppingList, FirebaseUIViewHolder>(options) {
-           @Override
-           protected void onBindViewHolder(@NonNull FirebaseUIViewHolder holder, int position, @NonNull ShoppingList model) {
-               holder.textViewListName(model.getListName());
-               holder.textViewCreatedByUser(model.getOwner());
-           }
-
-           @NonNull
-           @Override
-           public FirebaseUIViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-               int layoutIdForListItem = R.layout.single_active_list;
-               LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-               boolean shouldAttachToParentImmediately = false;
-
-               View view = inflater.inflate(layoutIdForListItem, viewGroup, shouldAttachToParentImmediately);
-               FirebaseUIViewHolder holder = new FirebaseUIViewHolder(view);
-
-
-               return holder;
-
-           }
-       };*/
 
        mRecyclerView.setAdapter(mAdapter);
 

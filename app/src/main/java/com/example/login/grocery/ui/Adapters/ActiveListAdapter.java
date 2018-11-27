@@ -15,14 +15,15 @@ import android.widget.TextView;
 import com.example.login.grocery.R;
 import com.example.login.grocery.model.ShoppingList;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ActiveListAdapter extends RecyclerView.Adapter<ActiveListAdapter.MyViewHolder> {
     Context context;
-    ShoppingList shoppingList;
+    ArrayList<ShoppingList> shoppingList;
     ListItemClickListener listItemClickListener;
 
-    public ActiveListAdapter(Context context,ShoppingList list,ListItemClickListener listItemClickListener) {
+    public ActiveListAdapter(Context context,ArrayList<ShoppingList>list,ListItemClickListener listItemClickListener) {
         this.context=context;
         this.shoppingList = list;
         this.listItemClickListener = listItemClickListener;
@@ -57,7 +58,7 @@ public class ActiveListAdapter extends RecyclerView.Adapter<ActiveListAdapter.My
 
     @Override
     public int getItemCount() {
-        return 1;
+        return shoppingList.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -85,8 +86,8 @@ public class ActiveListAdapter extends RecyclerView.Adapter<ActiveListAdapter.My
 
         //in this section we will bind the text view to the data
         //but this will be done by firebase
-        String listname = shoppingList.getListName();
-        String username = shoppingList.getOwner();
+        String listname = shoppingList.get(position).getListName();
+        String username = shoppingList.get(position).getOwner();
         textViewListName.setText(listname);
         textViewCreatedByUser.setText(username);
         textViewPeopleShoppingCount.setText("6");
