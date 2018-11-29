@@ -63,6 +63,8 @@ public class ShoppingListsFragment extends Fragment implements ActiveListAdapter
     private FirebaseUIViewHolder mViewHolder;
     // private OnFragmentInteractionListener mListener;
     private ArrayList<ShoppingList> listHashMap = new ArrayList<>();
+    private ArrayList<DatabaseReference>references = new ArrayList<>();
+    public static DatabaseReference searchDatabaseReference ;
 
     public ShoppingListsFragment() {
         // Required empty public constructor
@@ -111,9 +113,10 @@ public class ShoppingListsFragment extends Fragment implements ActiveListAdapter
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
 
                     ShoppingList list = ds.getValue(ShoppingList.class);
+
                     Log.e(LOG,"the length of the list is :  "+list.getListName());
                     Log.e(LOG,"the length of the list is :  "+list.getOwner());
-
+                    references.add(ds.getRef());
                     listHashMap.add(list);
 
 
@@ -177,6 +180,7 @@ public class ShoppingListsFragment extends Fragment implements ActiveListAdapter
         Intent intent = new Intent(getActivity(), ActiveListDetailsActivity.class);
         String data = textView.getText().toString();
         intent.putExtra(Constants.KEY_LIST_ITEM_ID,data);
+        searchDatabaseReference = references.get(clickedItemIndex);
         startActivity(intent);
 
     }

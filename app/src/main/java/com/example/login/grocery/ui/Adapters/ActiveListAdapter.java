@@ -61,7 +61,7 @@ public class ActiveListAdapter extends RecyclerView.Adapter<ActiveListAdapter.My
         return shoppingList.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
     TextView textViewListName;
     TextView createdBy;

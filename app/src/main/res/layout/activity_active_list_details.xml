@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@color/text_tertiary_dark"
     >
 
@@ -41,11 +42,11 @@
                 />
         </LinearLayout>
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/list_view_shopping_list_items"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none" />
+            />
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -59,6 +60,7 @@
         android:onClick="addMeal"
         android:src="@drawable/abc_ic_menu_copy_mtrl_am_alpha"
         app:borderWidth="0dp"
+        android:layout_margin="10dp"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp"
         android:visibility="gone"/>
@@ -72,6 +74,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:onClick="showAddListItemDialog"
+        android:layout_margin="10dp"
         android:src="@drawable/plus"
         app:borderWidth="0dp"
         app:elevation="6dp"
