@@ -10,14 +10,21 @@
     android:paddingRight="@dimen/activity_vertical_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
 
-    <EditText
-        android:id="@+id/edit_text_list_dialog"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/positive_button_add_list_item"
-        android:imeOptions="actionDone|flagNoExtractUi"
-        android:inputType="text"
-        android:textColor="@color/background_super_dark"
-        android:textColorHint="@color/mid_grey" />
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_text_list_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone|flagNoExtractUi"
+            android:inputType="text"
+            android:textColor="@color/background_super_dark"
+            android:textColorHint="@color/mid_grey"
+            android:hint="@string/positive_button_add_list_item"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
 </RelativeLayout>

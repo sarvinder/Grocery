@@ -2,8 +2,8 @@ package com.example.login.grocery.ui.Widgets;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.util.Log;
 
 import com.example.login.grocery.R;
@@ -86,56 +86,6 @@ public class AddListItemDialogFragment extends EditListDialogFragment {
 
                 }
             });
-
-            /*
-            Firebase firebaseRef = new Firebase(Constants.FIREBASE_URL);
-            Firebase itemsRef = new Firebase(Constants.FIREBASE_URL_SHOPPING_LIST_ITEMS).child(mListId);
-
-            */
-            /* Make a map for the item you are adding *//*
-
-            HashMap<String, Object> updatedItemToAddMap = new HashMap<String, Object>();
-
-            */
-            /* Save push() to maintain same random Id *//*
-
-            Firebase newRef = itemsRef.push();
-            String itemId = newRef.getKey();
-
-            */
-            /* Make a POJO for the item and immediately turn it into a HashMap *//*
-
-            ShoppingListItem itemToAddObject = new ShoppingListItem(mItemName, mEncodedEmail);
-            HashMap<String, Object> itemToAdd =
-                    (HashMap<String, Object>) new ObjectMapper().convertValue(itemToAddObject, Map.class);
-
-
-            */
-            /* Add the item to the update map*//*
-
-            updatedItemToAddMap.put("/" + Constants.FIREBASE_LOCATION_SHOPPING_LIST_ITEMS + "/"
-                    + mListId + "/" + itemId, itemToAdd);
-
-            */
-            /* Update affected lists timestamps *//*
-
-            Utils.updateMapWithTimestampLastChanged(mSharedWith,
-                    mListId, mOwner, updatedItemToAddMap);
-
-            */
-            /* Do the update *//*
-
-            firebaseRef.updateChildren(updatedItemToAddMap, new Firebase.CompletionListener() {
-                @Override
-                public void onComplete(FirebaseError firebaseError, Firebase firebase) {
-                    */
-            /* Now that we have the timestamp, update the reversed timestamp *//*
-
-                    Utils.updateTimestampReversed(firebaseError, "AddListItem", mListId,
-                            mSharedWith, mOwner);
-                }
-            });
-            */
 
             /**
              * Close the dialog fragment when done

@@ -22,6 +22,18 @@
 <color name="colorAccent">@color/colorPrimary</color> <!-- mono-color -->
 <color name="colorPrimary_dark">#4aa87a</color>
 
+    <color name="secondary">#03DAC6</color>
+    <color name="secondaryvarient">#018786</color>
+    <color name="background">#FFFFFF</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="error">#B00020</color>
+    <color name="onprimary">#FFFFFF</color>
+    <color name="onsecondary">#000000</color>
+    <color name="onbackground">#000000</color>
+    <color name="onsurface">#000000</color>
+    <color name="onerror">#FFFFFF</color>
+
+
 <!-- common colours -->
 <color name="text_primary_dark">#de000000</color> <!-- 87% -->
 <color name="text_secondary_dark">#8a000000</color> <!-- 54% -->
@@ -56,7 +68,6 @@
 <color name="page_indicator_dark">#80333333</color>
 <color name="page_indicator_dark_selected">#ff333333</color>
 <color name="selected_comment_background">#ffffffff</color>
-<color name="error">#ffdd2c00</color>
 <color name="delete">#fff44336</color>
 <color name="shadow">#4c000000</color>
 

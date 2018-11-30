@@ -2,20 +2,15 @@ package com.example.login.grocery.ui.Widgets;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.login.grocery.R;
 import com.example.login.grocery.model.ShoppingList;
-import com.example.login.grocery.model.ShoppingListItem;
 import com.example.login.grocery.model.User;
 import com.example.login.grocery.ui.Fragments.ShoppingListsFragment;
-import com.example.login.grocery.ui.Screens.ActiveListDetailsActivity;
 import com.example.login.grocery.utils.Constants;
-import com.example.login.grocery.utils.Utils;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 

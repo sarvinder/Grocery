@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -42,14 +42,15 @@
                 />
         </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_view_shopping_list_items"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/fab_detail_add_meal"
         style="@style/FAB"
         android:layout_width="wrap_content"
@@ -65,7 +66,8 @@
         app:pressedTranslationZ="12dp"
         android:visibility="gone"/>
 
-    <android.support.design.widget.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/fab_detail_add_item"
         style="@style/FAB"
         android:layout_width="wrap_content"
